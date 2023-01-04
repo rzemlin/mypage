@@ -1,6 +1,6 @@
 class WebsitesController < ApplicationController
   before_action :set_website, only: %i[ show edit update destroy ]
-
+  skip_before_action :verify_authenticity_token
   # GET /websites or /websites.json
   def index
     @websites = Website.all
@@ -53,7 +53,7 @@ class WebsitesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to websites_url, notice: "Website was successfully destroyed." }
-      format.json { head :no_content }
+      format.json { render json: Website.all, status: :ok }
     end
   end
 
@@ -65,6 +65,6 @@ class WebsitesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def website_params
-      params.require(:website).permit(:title, :body, :link)
+      params.require(:website).permit(:title, :body, :link. :id)
     end
 end
